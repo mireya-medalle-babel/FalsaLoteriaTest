@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bola {
+public class  Bola {
     private int numero;
     private double probabilidad;
     private boolean puedeSalir;
