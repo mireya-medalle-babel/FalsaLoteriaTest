@@ -8,6 +8,5 @@ import java.util.Set;
 public interface IBomboService {
 
     Bombo inicializarBombo();
-    int bolaGanadora(Set<Bola> bolas);
 
 }

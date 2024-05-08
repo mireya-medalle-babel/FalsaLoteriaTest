@@ -1,6 +1,8 @@
 package com.babel.falsaloteriatest;
 
 import com.babel.falsaloteriatest.modelo.Bola;
+import com.babel.falsaloteriatest.modelo.Bombo;
+import com.babel.falsaloteriatest.servicio.BomboService;
 import com.babel.falsaloteriatest.servicio.CalcularProbabilidad;
 import com.babel.falsaloteriatest.servicio.ICalcularProbabilidad;
 import org.junit.jupiter.api.Assertions;
@@ -10,10 +12,15 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Iterator;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CalcularProbabilidadTest {
     @InjectMocks
     CalcularProbabilidad calcularProbabilidad;
+
+    @InjectMocks
+    BomboService bomboService;
 
     @BeforeAll
     void beforeAll(){
@@ -103,6 +110,27 @@ public class CalcularProbabilidadTest {
         //Then
         Assertions.assertFalse(bolaPerdedora.isPuedeSalir());
     }
+
+    @Test
+    public void setearProbabilidadBombo(){
+        Bombo bombo = bomboService.inicializarBombo();
+
+        // Given
+        Bola bolaGanadora = new Bola(0,10,true);
+
+        // When
+        calcularProbabilidad.modificarProbabilidadBombo(bombo, bolaGanadora);
+
+        // Then
+        for (Bola bolaActual : bombo.getBolas()) {
+            if (bolaActual.equals(bolaGanadora)) {
+                Assertions.assertEquals(9.1, bolaGanadora.getProbabilidad());
+            } else {
+                Assertions.assertEquals(10.1, bolaActual.getProbabilidad());
+            }
+        }
+    }
+
     /*
     de un solo bombo (las probabilidades):
     public void saleNumero() -> el numero es del 0 al 9 ///seria de bombo?
